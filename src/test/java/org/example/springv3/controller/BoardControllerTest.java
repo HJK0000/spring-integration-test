@@ -75,6 +75,40 @@ public class BoardControllerTest {
 
         }
 
+        // 실패 테스트 코드 추가
+        @Test
+        public void save_fail_test() throws Exception {
+
+                //given
+                BoardRequest.SaveDTO reqDTO = new BoardRequest.SaveDTO();
+                reqDTO.setTitle("");
+                reqDTO.setContent("content 11");
+
+                String requestBody = om.writeValueAsString(reqDTO);
+                System.out.println(requestBody);
+
+                //when
+
+                ResultActions actions = mvc.perform(
+                        MockMvcRequestBuilders.post("/api/board")
+                                .header("Authorization", "Bearer " + accessToken)
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ); // 실제 테스트 코드 동작 코드
+
+                //eye
+
+                String responseBody = actions.andReturn().getResponse().getContentAsString();
+                System.out.println(responseBody);
+
+                //then
+/*                actions.andExpect(MockMvcResultMatchers.jsonPath("$.status").value(200));
+                actions.andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("성공"));
+                actions.andExpect(MockMvcResultMatchers.jsonPath("$.body.id").value(4));*/
+
+        }
+
+
         @Test
         public void delete_test() throws Exception {
 
